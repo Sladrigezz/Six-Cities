@@ -6,7 +6,7 @@ const App = (props) => {
   const {data} = props;
 
   return <MainPage
-    data={data}
+    offers={data}
   />;
 };
 

@@ -29,11 +29,11 @@ export default class PlaceList extends Component {
     });
   }
   render() {
-    const {cards} = this.props;
+    const {cards, currentCity} = this.props;
 
     return (
       <div className="cities__places-list places__list tabs__content">
-        {cards.map((card) => {
+        {cards.filter((el) => el.city === currentCity).map((card) => {
 
           return <PlaceCard
             onClick={this.onClick}
@@ -51,4 +51,5 @@ export default class PlaceList extends Component {
 
 PlaceList.propTypes = {
   cards: PropTypes.arrayOf(PropTypes.object).isRequired,
+  currentCity: PropTypes.string
 };

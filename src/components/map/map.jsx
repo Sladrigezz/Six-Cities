@@ -14,14 +14,15 @@ export default class Map extends Component {
   render() {
     return (
       <div
+        style={{height: `100%`}}
         ref={this.container}
-        id="map"
-      ></div>
+        id="map">
+      </div>
     )
   }
 
   componentDidMount() {
-    const {cards, currentCity} = this.props;
+    const {cards} = this.props;
     const city = [52.38333, 4.9];
 
     const icon = leaflet.icon({
@@ -44,7 +45,7 @@ export default class Map extends Component {
       })
       .addTo(this.map);
 
-    cards.filter((el) => el.city === currentCity).forEach((card) => {
+    cards.forEach((card) => {
       leaflet
         .marker(card.coordinates, {icon})
         .addTo(this.map);
