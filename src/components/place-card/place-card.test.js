@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import App from './app.jsx';
+import PlaceCard from './place-card.jsx';
 
 const mock = [
   {
@@ -13,12 +13,18 @@ const mock = [
   },
 ];
 
-it(`Correctly renders component 'App'`, () => {
+it(`Correctly render component ItemCard`, () => {
+  const testHandler = jest.fn();
   const tree = renderer
-    .create(<App
-      data={mock}
-    />)
-    .toJSON();
+  .create(<PlaceCard
+    onClick={testHandler}
+    onDeHover={testHandler}
+    onHover={testHandler}
+    index={mock[0].id}
+    data={mock[0]}
+  />)
+  .toJSON();
 
   expect(tree).toMatchSnapshot();
 });
+
