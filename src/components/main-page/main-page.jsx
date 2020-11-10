@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import PlaceList from '../place-list/place-list.jsx';
+import Map from '../map/map.jsx';
 
 const MainPage = (props) => {
   const {data} = props;
@@ -102,7 +103,11 @@ const MainPage = (props) => {
 
           </section>
           <div className="cities__right-section">
-            <section className="cities__map map" />
+            <section className="cities__map map" >
+              <Map cards={props.data}
+               
+              />
+            </section>
           </div>
         </div>
       </div>

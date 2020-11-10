@@ -52,5 +52,3 @@ export default class PlaceList extends Component {
 PlaceList.propTypes = {
   cards: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
-
-
