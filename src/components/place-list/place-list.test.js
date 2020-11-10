@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import App from './app.jsx';
+import PlaceList from './place-list.jsx';
 
 const mock = [
   {
@@ -13,12 +13,14 @@ const mock = [
   },
 ];
 
-it(`Correctly renders component 'App'`, () => {
+it(`Correctly render component MainCard`, () => {
   const tree = renderer
-    .create(<App
-      data={mock}
-    />)
-    .toJSON();
+  .create(<PlaceList
+    cards = {mock}
+  />)
+  .toJSON();
 
   expect(tree).toMatchSnapshot();
 });
+
+

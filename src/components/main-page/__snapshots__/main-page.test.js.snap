@@ -263,6 +263,8 @@ exports[`Correctly render component MainPage 1`] = `
           >
             <article
               className="cities__place-card place-card"
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
             >
               <div
                 className="place-card__mark"
@@ -281,6 +283,7 @@ exports[`Correctly render component MainPage 1`] = `
                     alt="Place image"
                     className="place-card__image"
                     height={200}
+                    onClick={[Function]}
                     src="img/apartment-01.jpg"
                     width={260}
                   />
@@ -298,7 +301,8 @@ exports[`Correctly render component MainPage 1`] = `
                     <b
                       className="place-card__price-value"
                     >
-                      €120
+                      €
+                      120
                     </b>
                     <span
                       className="place-card__price-text"
