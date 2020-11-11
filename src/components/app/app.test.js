@@ -1,6 +1,16 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import App from './app.jsx';
+import {createStore} from 'redux';
+import {Provider} from 'react-redux';
+
+import leaflet from 'leaflet';
+import reducer from '../../reducer.js';
+
+leaflet.map = () => ({
+  setView: () => {},
+  addLayer: () => {},
+});
 
 const mock = [
   {
@@ -13,11 +23,17 @@ const mock = [
   },
 ];
 
+const store = createStore(reducer);
+
 it(`Correctly renders component 'App'`, () => {
   const tree = renderer
-    .create(<App
-      data={mock}
-    />)
+    .create(
+        <Provider store={store}>
+          <App
+            data = {mock}
+          />
+        </Provider>
+    )
     .toJSON();
 
   expect(tree).toMatchSnapshot();

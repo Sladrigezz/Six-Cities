@@ -1,10 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+
 import PlaceList from '../place-list/place-list.jsx';
 import Map from '../map/map.jsx';
 import CityList from '../city-list/city-list.jsx';
 import * as actions from '../../actions';
+
+import withActiveItem from '../../hocs/with-active-item';
+
+const PlaceListWrapped = withActiveItem(PlaceList);
+const CityListWrapped = withActiveItem(CityList);
 
 const MainPage = (props) => {
   const {offers, cities, onChangeCity, currentCity} = props;
@@ -39,11 +45,9 @@ const MainPage = (props) => {
       <h1 className="visually-hidden">Cities</h1>
       <div className="cities tabs">
         <section className="locations container">
-
-          <CityList
+          <CityListWrapped
             onChangeCity={onChangeCity}
-            cities={cities} />
-
+            cities={cities}/>
         </section></div>
       <div className="cities__places-wrapper">
         <div className="cities__places-container container">
@@ -74,7 +78,7 @@ const MainPage = (props) => {
           */}
             </form>
 
-            <PlaceList
+            <PlaceListWrapped
               currentCity={currentCity}
               cards={offers} />
 
@@ -82,35 +86,37 @@ const MainPage = (props) => {
           <div className="cities__right-section">
             <section className="cities__map map" >
               <Map cards={currentOffer}
-                currentCity={currentCity}
                 key={currentCity}
+                currentCity={currentCity}
               />
             </section>
+
           </div>
         </div>
       </div>
     </main>
   </div>;
-}
+};
 
 MainPage.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.object).isRequired,
   cities: PropTypes.object,
   onChangeCity: PropTypes.func,
   currentCity: PropTypes.string
-}
+};
+
 
 const mapStateToProps = (state) => {
   return {
     cities: state.listCities,
     currentCity: state.currentCity
-  }
-}
+  };
+};
 
 
 const mapDispatchToProps = (dispatch) => ({
   onChangeCity: (city) => dispatch(actions.changeCity(city)),
-})
+});
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
