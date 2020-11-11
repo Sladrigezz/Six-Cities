@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
 export class CardOffer extends React.PureComponent {
   render() {
@@ -41,7 +42,7 @@ export class CardOffer extends React.PureComponent {
             </div>
           </div>
           <h2 className="place-card__name">
-            <a href="#">{title}</a>
+            <Link to={{pathname: `/offer/${offer.id}`}}>{title}</Link>
           </h2>
           <p className="place-card__type">{type}</p>
         </div>
@@ -58,5 +59,6 @@ CardOffer.propTypes = {
     price: PropTypes.number,
     type: PropTypes.string,
     images: PropTypes.array,
+    id: PropTypes.number,
   }),
 };

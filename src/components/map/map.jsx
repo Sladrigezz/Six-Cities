@@ -38,12 +38,13 @@ export class MapSection extends React.PureComponent {
     this.mapLeaf.setView(city, zoom);
 
     leaflet
-    .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
-      attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
-    })
-    .addTo(this.mapLeaf);
+      .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
+        attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
+      })
+      .addTo(this.mapLeaf);
     return filteredOffers.map((item) => {
-      return leaflet.marker(item.position, {icon}).addTo(this.mapLeaf);
+      const position = item.position ? item.position : [0, 0];
+      return leaflet.marker(position, {icon}).addTo(this.mapLeaf);
     });
   }
 
@@ -77,8 +78,8 @@ MapSection.propTypes = {
 };
 
 export default connect(
-    (state) => ({
-      filteredOffers: state.data.filteredOffers,
-    })
+  (state) => ({
+    filteredOffers: state.data.filteredOffers,
+  })
 )(MapSection);
 
