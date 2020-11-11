@@ -1,42 +1,37 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import MainPage from './main-page.jsx';
+import {MainPage} from './main-page.jsx';
 
-import {Provider} from 'react-redux';
-import {createStore} from 'redux';
-import leaflet from 'leaflet';
-import reducer from '../../reducer.js';
+jest.mock(`../map/map.jsx`);
+jest.mock(`../cities-list/cities-list.jsx`);
+jest.mock(`../card-offers-list/card-offers-list.jsx`);
 
-leaflet.map = () => ({
-  setView: () => {},
-  addLayer: () => {},
+it(`should match snapshot`, () => {
+  const loadOffersList = jest.fn();
+  const setDefaultSettings = jest.fn();
+  const props = {
+    offers: [{
+      name: `AAA`,
+      price: 120,
+      type: `AAA`,
+      src: `AAA`,
+    }],
+    filteredOffers: [{
+      name: `AAA`,
+      price: 120,
+      type: `AAA`,
+      src: `AAA`,
+    }],
+    cities: [`AAA`],
+    activeCity: `AAA`,
+    responseAuth: {
+      email: `ccc@cv.cz`
+    },
+    loadOffersList,
+    setDefaultSettings,
+  };
+  const mainPage = renderer.create(<MainPage {...props} />).toJSON();
+
+  expect(mainPage).toMatchSnapshot();
 });
-
-const mock = [
-  {
-    title: `Beautiful & luxurious apartment at great location`,
-    price: `120`,
-    degree: `Apartment`,
-    order: `Premium`,
-    photo: `img/apartment-01.jpg`,
-    id: 1
-  },
-];
-
-const store = createStore(reducer);
-
-it(`Correctly render component MainPage`, () => {
-  const tree = renderer
-  .create(
-      <Provider store={store}>
-        <MainPage
-          offers = {mock}
-        />
-      </Provider>
-  )
-  .toJSON();
-
-  expect(tree).toMatchSnapshot();
-});
-
 

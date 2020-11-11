@@ -1,31 +1,28 @@
 import React from 'react';
+import {MapSection} from './map.jsx';
 import renderer from 'react-test-renderer';
-import Map from './map.jsx';
 
-import leaflet from 'leaflet';
+it(`should match snapshot`, () => {
+  const filteredOffers = [{
+    city: {
+      location: {
+        latitude: 111,
+        longitude: 222,
+        zoom: 1
+      },
+      name: `AAA`,
+    },
+    price: 120,
+    type: `AAA`,
+    src: [`AAA`],
+    position: [123, 123],
+  }];
 
-leaflet.map = () => ({
-  setView: () => {},
-  addLayer: () => {},
-});
+  const div = document.createElement(`div`);
+  div.id = `map`;
+  document.body.appendChild(div);
 
-const mock = [
-  {
-    title: `Beautiful & luxurious apartment at great location`,
-    price: `120`,
-    degree: `Apartment`,
-    order: `Premium`,
-    photo: `img/apartment-01.jpg`,
-    id: 1,
-    coordinates: [52.3909553943508, 4.85309666406198],
-  },
-];
+  const wrapper = renderer.create(<MapSection filteredOffers={filteredOffers} />).toJSON();
 
-it(`Snapshot test Map Component`, () => {
-  const tree = renderer
-  .create(<Map
-    cards={mock}
-  />).toJSON();
-
-  expect(tree).toMatchSnapshot();
+  expect(wrapper).toMatchSnapshot();
 });

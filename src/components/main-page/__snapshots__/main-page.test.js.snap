@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Correctly render component MainPage 1`] = `
-<div>
+exports[`should match snapshot 1`] = `
+Array [
   <div
     style={
       Object {
@@ -41,252 +41,162 @@ exports[`Correctly render component MainPage 1`] = `
         />
       </symbol>
     </svg>
-  </div>
-  <header
-    className="header"
+  </div>,
+  <div
+    className="page page--gray page--main"
   >
-    <div
-      className="container"
+    <header
+      className="header"
     >
       <div
-        className="header__wrapper"
+        className="container"
       >
         <div
-          className="header__left"
+          className="header__wrapper"
         >
-          <a
-            className="header__logo-link header__logo-link--active"
-          >
-            <img
-              alt="6 cities logo"
-              className="header__logo"
-              height={41}
-              src="img/logo.svg"
-              width={81}
-            />
-          </a>
-        </div>
-        <nav
-          className="header__nav"
-        >
-          <ul
-            className="header__nav-list"
-          >
-            <li
-              className="header__nav-item user"
-            >
-              <a
-                className="header__nav-link header__nav-link--profile"
-                href="#"
-              >
-                <div
-                  className="header__avatar-wrapper user__avatar-wrapper"
-                />
-                <span
-                  className="header__user-name user__name"
-                >
-                  Oliver.conner@gmail.com
-                </span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </div>
-  </header>
-  <main
-    className="page__main page__main--index"
-  >
-    <h1
-      className="visually-hidden"
-    >
-      Cities
-    </h1>
-    <div
-      className="cities tabs"
-    >
-      <section
-        className="locations container"
-      >
-        <ul
-          className="locations__list tabs__list"
-        >
-          <li
-            className="locations__item-link "
+          <div
+            className="header__left"
           >
             <a
-              className="locations__item-link tabs__item"
-              href="#"
-              onClick={[Function]}
+              className="header__logo-link header__logo-link--active"
             >
-              <span>
-                Amsterdam
-              </span>
+              <img
+                alt="6 cities logo"
+                className="header__logo"
+                height="41"
+                src="img/logo.svg"
+                width="81"
+              />
             </a>
-          </li>
-          <li
-            className="locations__item-link "
+          </div>
+          <nav
+            className="header__nav"
           >
-            <a
-              className="locations__item-link tabs__item"
-              href="#"
-              onClick={[Function]}
-            >
-              <span>
-                Wroclaw
-              </span>
-            </a>
-          </li>
-          <li
-            className="locations__item-link "
-          >
-            <a
-              className="locations__item-link tabs__item"
-              href="#"
-              onClick={[Function]}
-            >
-              <span>
-                Berlin
-              </span>
-            </a>
-          </li>
-          <li
-            className="locations__item-link "
-          >
-            <a
-              className="locations__item-link tabs__item"
-              href="#"
-              onClick={[Function]}
-            >
-              <span>
-                Vena
-              </span>
-            </a>
-          </li>
-          <li
-            className="locations__item-link "
-          >
-            <a
-              className="locations__item-link tabs__item"
-              href="#"
-              onClick={[Function]}
-            >
-              <span>
-                Budapesht
-              </span>
-            </a>
-          </li>
-          <li
-            className="locations__item-link "
-          >
-            <a
-              className="locations__item-link tabs__item"
-              href="#"
-              onClick={[Function]}
-            >
-              <span>
-                Krakow
-              </span>
-            </a>
-          </li>
-        </ul>
-      </section>
-    </div>
-    <div
-      className="cities__places-wrapper"
-    >
-      <div
-        className="cities__places-container container"
-      >
-        <section
-          className="cities__places places"
-        >
-          <h2
-            className="visually-hidden"
-          >
-            Places
-          </h2>
-          <b
-            className="places__found"
-          >
-            312 places to stay in Amsterdam
-          </b>
-          <form
-            action="#"
-            className="places__sorting"
-            method="get"
-          >
-            <span
-              className="places__sorting-caption"
-            >
-              Sort by
-            </span>
-            <span
-              className="places__sorting-type"
-              tabIndex={0}
-            >
-              Popular
-              <svg
-                className="places__sorting-arrow"
-                height={4}
-                width={7}
-              >
-                <use
-                  xlinkHref="#icon-arrow-select"
-                />
-              </svg>
-            </span>
             <ul
-              className="places__options places__options--custom places__options--opened"
+              className="header__nav-list"
             >
               <li
-                className="places__option places__option--active"
-                tabIndex={0}
+                className="header__nav-item user"
               >
-                Popular
-              </li>
-              <li
-                className="places__option"
-                tabIndex={0}
-              >
-                Price: low to high
-              </li>
-              <li
-                className="places__option"
-                tabIndex={0}
-              >
-                Price: high to low
-              </li>
-              <li
-                className="places__option"
-                tabIndex={0}
-              >
-                Top rated first
+                <a
+                  className="header__nav-link header__nav-link--profile"
+                  href="#"
+                >
+                  <div
+                    className="header__avatar-wrapper user__avatar-wrapper"
+                  />
+                  <span
+                    className="header__user-name user__name"
+                  >
+                    ccc@cv.cz
+                  </span>
+                </a>
               </li>
             </ul>
-          </form>
-          <div
-            className="cities__places-list places__list tabs__content"
-          />
-        </section>
-        <div
-          className="cities__right-section"
-        >
-          <section
-            className="cities__map map"
-          >
-            <div
-              id="map"
-              style={
-                Object {
-                  "height": "100%",
-                }
-              }
-            />
-          </section>
+          </nav>
         </div>
       </div>
-    </div>
-  </main>
-</div>
+    </header>
+    <main
+      className="page__main page__main--index"
+    >
+      <h1
+        className="visually-hidden"
+      >
+        Cities
+      </h1>
+      <div
+        className="tabs"
+      />
+      <div
+        className="cities"
+      >
+        <div
+          className="cities__places-container container"
+        >
+          <section
+            className="cities__places places"
+          >
+            <h2
+              className="visually-hidden"
+            >
+              Places
+            </h2>
+            <b
+              className="places__found"
+            >
+              1
+               places to stay in 
+              AAA
+            </b>
+            <form
+              action="#"
+              className="places__sorting"
+              method="get"
+            >
+              <span
+                className="places__sorting-caption"
+              >
+                Sort by
+              </span>
+              <span
+                className="places__sorting-type"
+                tabIndex="0"
+              >
+                Popular
+                <svg
+                  className="places__sorting-arrow"
+                  height="4"
+                  width="7"
+                >
+                  <use
+                    xlinkHref="#icon-arrow-select"
+                  />
+                </svg>
+              </span>
+              <ul
+                className="places__options places__options--custom places__options--opened"
+              >
+                <li
+                  className="places__option places__option--active"
+                  tabIndex="0"
+                >
+                  Popular
+                </li>
+                <li
+                  className="places__option"
+                  tabIndex="0"
+                >
+                  Price: low to high
+                </li>
+                <li
+                  className="places__option"
+                  tabIndex="0"
+                >
+                  Price: high to low
+                </li>
+                <li
+                  className="places__option"
+                  tabIndex="0"
+                >
+                  Top rated first
+                </li>
+              </ul>
+            </form>
+            <div
+              className="cities__places-list places__list tabs__content"
+            />
+          </section>
+          <div
+            className="cities__right-section"
+          >
+            <section
+              className="cities__map map"
+            />
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>,
+]
 `;

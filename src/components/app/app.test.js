@@ -1,40 +1,18 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import App from './app.jsx';
-import {createStore} from 'redux';
-import {Provider} from 'react-redux';
+import {App} from './app.jsx';
 
-import leaflet from 'leaflet';
-import reducer from '../../reducer.js';
+jest.mock(`../map/map`);
+jest.mock(`../main-page/main-page.jsx`);
 
-leaflet.map = () => ({
-  setView: () => {},
-  addLayer: () => {},
-});
+it(`should match snapshot`, () => {
+  const offers = [{
+    name: `AAA`,
+    price: 120,
+    type: `AAA`,
+    src: `AAA`,
+  }];
 
-const mock = [
-  {
-    title: `Beautiful & luxurious apartment at great location`,
-    price: `120`,
-    degree: `Apartment`,
-    order: `Premium`,
-    photo: `img/apartment-01.jpg`,
-    id: 1
-  },
-];
-
-const store = createStore(reducer);
-
-it(`Correctly renders component 'App'`, () => {
-  const tree = renderer
-    .create(
-        <Provider store={store}>
-          <App
-            data = {mock}
-          />
-        </Provider>
-    )
-    .toJSON();
-
-  expect(tree).toMatchSnapshot();
+  const app = renderer.create(<App offers={offers} />).toJSON();
+  expect(app).toMatchSnapshot();
 });
