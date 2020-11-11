@@ -21,7 +21,7 @@ describe(`Test e2e value component`, () => {
   const app = shallow(<PlaceCard
     index={mock[0].id}
     data={mock[0]}
-    onClick = {clickHandler}/>);
+    onClickActiveCard = {clickHandler}/>);
 
   it(`Click on link - 'Head in Card'`, () => {
     const imageCard = app.find(`.place-card__image`);

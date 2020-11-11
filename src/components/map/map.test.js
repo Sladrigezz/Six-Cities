@@ -1,11 +1,8 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import MainPage from './main-page.jsx';
+import Map from './map.jsx';
 
-import {Provider} from 'react-redux';
-import {createStore} from 'redux';
 import leaflet from 'leaflet';
-import reducer from '../../reducer.js';
 
 leaflet.map = () => ({
   setView: () => {},
@@ -19,24 +16,16 @@ const mock = [
     degree: `Apartment`,
     order: `Premium`,
     photo: `img/apartment-01.jpg`,
-    id: 1
+    id: 1,
+    coordinates: [52.3909553943508, 4.85309666406198],
   },
 ];
 
-const store = createStore(reducer);
-
-it(`Correctly render component MainPage`, () => {
+it(`Snapshot test Map Component`, () => {
   const tree = renderer
-  .create(
-      <Provider store={store}>
-        <MainPage
-          offers = {mock}
-        />
-      </Provider>
-  )
-  .toJSON();
+  .create(<Map
+    cards={mock}
+  />).toJSON();
 
   expect(tree).toMatchSnapshot();
 });
-
-
