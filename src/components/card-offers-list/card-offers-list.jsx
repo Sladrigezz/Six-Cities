@@ -17,6 +17,7 @@ export const CardOffersList = (props) => {
         key={uniqueName}
         offer={item}
         offerName={uniqueName}
+        id={item.id}
       />;
     })
   );
@@ -27,7 +28,7 @@ CardOffersList.propTypes = {
 };
 
 export default connect(
-    (state) => ({
-      offers: state.data.filteredOffers,
-    })
+  (state) => ({
+    offers: state.data.filteredOffers,
+  })
 )(CardOffersList);

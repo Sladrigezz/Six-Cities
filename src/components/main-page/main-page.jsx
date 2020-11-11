@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-
 import CardOffersList from '../card-offers-list/card-offers-list.jsx';
 import MapSection from '../map/map.jsx';
 import CitiesList from '../cities-list/cities-list.jsx';
 import {loadOffers} from '../../reducers/data.js';
 import {startUpOffers} from '../../reducers/user.js';
 import {getResponseAuth} from '../../selectors/data.js';
+import {Logo} from '../logo/logo.jsx';
 
 export class MainPage extends React.PureComponent {
   constructor(props) {
@@ -15,12 +15,12 @@ export class MainPage extends React.PureComponent {
   }
 
   render() {
-    const {filteredOffers, activeCity, responseAuth} = this.props;
-    const {email} = responseAuth;
+    const {filteredOffers, activeCity} = this.props;
+    //const {email} = responseAuth;
     const onMouseEnterHandler = (name) => {
       return this.setState({focusedOfferName: name});
     };
-    const registeredEmail = email ? email : ``;
+    //const registeredEmail = email ? email : ``;
 
     return (
           <>
@@ -46,9 +46,7 @@ export class MainPage extends React.PureComponent {
                       <div className="container">
                         <div className="header__wrapper">
                           <div className="header__left">
-                            <a className="header__logo-link header__logo-link--active">
-                              <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-                            </a>
+                          <Logo />
                           </div>
                           <nav className="header__nav">
                             <ul className="header__nav-list">
@@ -56,7 +54,7 @@ export class MainPage extends React.PureComponent {
                                 <a className="header__nav-link header__nav-link--profile" href="#">
                                   <div className="header__avatar-wrapper user__avatar-wrapper">
                                   </div>
-                                  <span className="header__user-name user__name">{registeredEmail}</span>
+                                  {/* <span className="header__user-name user__name">{registeredEmail}</span> */}
                                 </a>
                               </li>
                             </ul>

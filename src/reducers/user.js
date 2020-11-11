@@ -5,7 +5,7 @@ import {getAuthFormData} from '../selectors/user.js';
 const initialState = {
   activeCity: ``,
   citiesList: [],
-  isAuthorizationRequired: true,
+  isAuthorizationRequired: false,
   formAuth: {},
 };
 
