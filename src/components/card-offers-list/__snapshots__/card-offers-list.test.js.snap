@@ -1,17 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Correctly render component ItemCard 1`] = `
+exports[`should match snapshot 1`] = `
 <article
   className="cities__place-card place-card"
-  onMouseEnter={[MockFunction]}
 >
-  <div
-    className="place-card__mark"
-  >
-    <span>
-      Premium
-    </span>
-  </div>
   <div
     className="cities__image-wrapper place-card__image-wrapper"
   >
@@ -21,10 +13,11 @@ exports[`Correctly render component ItemCard 1`] = `
       <img
         alt="Place image"
         className="place-card__image"
-        height={200}
-        onClick={[Function]}
-        src="img/apartment-01.jpg"
-        width={260}
+        height="200"
+        id="offer-1"
+        onMouseEnter={[Function]}
+        src="aaa"
+        width="260"
       />
     </a>
   </div>
@@ -50,13 +43,13 @@ exports[`Correctly render component ItemCard 1`] = `
         </span>
       </div>
       <button
-        className="place-card__bookmark-button button"
+        className="place-card__bookmark-button place-card__bookmark-button--active button"
         type="button"
       >
         <svg
           className="place-card__bookmark-icon"
-          height={19}
-          width={18}
+          height="19"
+          width="18"
         >
           <use
             xlinkHref="#icon-bookmark"
@@ -65,7 +58,7 @@ exports[`Correctly render component ItemCard 1`] = `
         <span
           className="visually-hidden"
         >
-          To bookmarks
+          In bookmarks
         </span>
       </button>
     </div>
@@ -78,7 +71,7 @@ exports[`Correctly render component ItemCard 1`] = `
         <span
           style={
             Object {
-              "width": "93%",
+              "width": "80%",
             }
           }
         />
@@ -94,14 +87,12 @@ exports[`Correctly render component ItemCard 1`] = `
     >
       <a
         href="#"
-      >
-        Beautiful & luxurious apartment at great location
-      </a>
+      />
     </h2>
     <p
       className="place-card__type"
     >
-      Apartment
+      AAA
     </p>
   </div>
 </article>
