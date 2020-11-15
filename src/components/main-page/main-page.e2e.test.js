@@ -6,6 +6,7 @@ import {MainPage} from './main-page.jsx';
 Enzyme.configure({adapter: new Adapter()});
 
 it(`should exist`, () => {
+  const checkAuthorization = jest.fn();
   const loadOffersList = jest.fn();
   const setDefaultSettings = jest.fn();
   const props = {
@@ -28,6 +29,7 @@ it(`should exist`, () => {
     },
     loadOffersList,
     setDefaultSettings,
+    checkAuthorization,
   };
 
   const wrapper = shallow(<MainPage {...props} />);

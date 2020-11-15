@@ -41,6 +41,7 @@
     "recompose": "0.30.0",
     "redux": "4.0.4",
     "redux-thunk": "2.3.0",
-    "reselect": "4.0.0"
+    "reselect": "4.0.0",
+    "sort-by-distance": "1.1.0"
   }
 }

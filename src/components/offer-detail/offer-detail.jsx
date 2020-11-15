@@ -1,16 +1,34 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {getOffer, getOffers} from '../../selectors/data';
+import {find, propEq} from 'ramda';
+
+import {getOffer, getReviewList, getFilteredOffers, getClosestOffers, getReviews} from '../../selectors/data.js';
+import {Logo} from '../logo/logo.jsx';
 import {loadOffers} from '../../reducers/data.js';
 import {startUpOffers} from '../../reducers/user.js';
-import {ratingTitles} from '../../constants/constants.js';
-import {Logo} from '../logo/logo.jsx';
+import {ActionCreator} from '../../reducers/index.js';
+import {CardTypes, BookmarkActions} from '../../constants/constants.js';
+import {ReviewsList} from '../reviews-list/reviews-list.jsx';
+import {loadReviews} from '../../reducers/data';
+import {MapSection} from '../map/map.jsx';
+import {CardOffer} from '../card-offer/card-offer.jsx';
+import ReviewForm from '../review-form/review-form.jsx';
+import {getIsAuthRequired} from '../../selectors/user.js';
+import SignIn from '../sign-in/sign-in.jsx';
 
 export class OfferDetail extends PureComponent {
   render() {
-    const {offer} = this.props;
-    const ratingPercent = offer && (offer.rating / 5) * 100;
+    const {offer, reviews, reviewList, closestOffers, filteredOffers, isAuthRequired} = this.props;
+    const ratingPercent = offer && (Math.round(offer.rating) / 5) * 100;
+
+    const handleBookmarkClick = () => {
+      const {ADD, REMOVE} = BookmarkActions;
+      const status = offer.is_favorite ? REMOVE : ADD;
+      const {addToFavorite, match} = this.props;
+      addToFavorite(match.params.id, status);
+    };
+
     return offer ? (
       <>
         <div style={{display: `none`}}>
@@ -40,11 +58,7 @@ export class OfferDetail extends PureComponent {
                 <nav className="header__nav">
                   <ul className="header__nav-list">
                     <li className="header__nav-item user">
-                      <a className="header__nav-link header__nav-link--profile" href="#">
-                        <div className="header__avatar-wrapper user__avatar-wrapper">
-                        </div>
-                        <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                      </a>
+                      <SignIn />
                     </li>
                   </ul>
                 </nav>
@@ -67,18 +81,23 @@ export class OfferDetail extends PureComponent {
               </div>
               <div className="property__container container">
                 <div className="property__wrapper">
-                  <div className="property__mark">
+                  {offer.is_premium && (<div className="property__mark">
                     <span>Premium</span>
-                  </div>
+                  </div>)}
                   <div className="property__name-wrapper">
                     <h1 className="property__name">
                       {offer.title}
                     </h1>
-                    <button className="property__bookmark-button button" type="button">
-                      <svg className="property__bookmark-icon" width="31" height="33">
+                    <button
+                      style={{position: `absolute`, top: `41px`, right: `93px`}}
+                      className={`place-card__bookmark-button place-card__bookmark-button${offer.is_favorite ? `--active` : ``} button`}
+                      type="button"
+                      onClick={handleBookmarkClick}
+                    >
+                      <svg className="place-card__bookmark-icon" width="31" height="33">
                         <use xlinkHref="#icon-bookmark"></use>
                       </svg>
-                      <span className="visually-hidden">To bookmarks</span>
+                      <span className="visually-hidden">In bookmarks</span>
                     </button>
                   </div>
                   <div className="property__rating rating">
@@ -86,7 +105,7 @@ export class OfferDetail extends PureComponent {
                       <span style={{width: `${ratingPercent}%`}}></span>
                       <span className="visually-hidden">Rating</span>
                     </div>
-                    <span className="property__rating-value rating__value">{offer.rating}</span>
+                    <span className="property__rating-value rating__value">{Math.round(offer.rating)}</span>
                   </div>
                   <ul className="property__features">
                     <li className="property__feature property__feature--entire">
@@ -133,160 +152,37 @@ export class OfferDetail extends PureComponent {
                     </div>
                   </div>
                   <section className="property__reviews reviews">
-                    <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                    <ul className="reviews__list">
-                      <li className="reviews__item">
-                        <div className="reviews__user user">
-                          <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                            <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54" alt="Reviews avatar" />
-                          </div>
-                          <span className="reviews__user-name">
-                            Max
-                          </span>
-                        </div>
-                        <div className="reviews__info">
-                          <div className="reviews__rating rating">
-                            <div className="reviews__stars rating__stars">
-                              <span style={{width: `94%`}}></span>
-                              <span className="visually-hidden">Rating</span>
-                            </div>
-                          </div>
-                          <p className="reviews__text">
-                            A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                          </p>
-                          <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
-                        </div>
-                      </li>
-                    </ul>
-                    <form className="reviews__form form" action="#" method="post">
-                      <label className="reviews__label form__label" htmlFor="review">Your review</label>
-                      <div className="reviews__rating-form form__rating">
-                        {ratingTitles.map((item, i) => {
-                          const count = i + 1;
-                          return (
-                            <>
-                              <input className="form__rating-input visually-hidden" name="rating" value={count} id={`${count}-stars`} type="radio" />
-                              <label htmlFor={`${count}-stars`} className="reviews__rating-label form__rating-label" title={item}>
-                                <svg className="form__star-image" width="37" height="33">
-                                  <use xlinkHref="#icon-star"></use>
-                                </svg>
-                              </label>
-                            </>
-                          );
-                        })}
-                      </div>
-                      <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
-                      <div className="reviews__button-wrapper">
-                        <p className="reviews__help">
-                          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
-                        </p>
-                        <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
-                      </div>
-                    </form>
+                    <h2
+                      className="reviews__title"
+                    >
+                      Reviews &middot;
+                      <span className="reviews__amount">
+                        {reviews && reviews.length}
+                      </span>
+                    </h2>
+                    <ReviewsList reviews={reviewList} />
+                    {!isAuthRequired && (<ReviewForm />)}
                   </section>
                 </div>
               </div>
-              <section className="property__map map"></section>
+              <section className="property__map map">
+                <MapSection offers={closestOffers} city={offer.city} currentOffer={offer} />
+
+              </section>
             </section>
             <div className="container">
               <section className="near-places places">
                 <h2 className="near-places__title">Other places in the neighbourhood</h2>
                 <div className="near-places__list places__list">
-                  <article className="near-places__card place-card">
-                    <div className="near-places__image-wrapper place-card__image-wrapper">
-                      <a href="#">
-                        <img className="place-card__image" src="img/room.jpg" width="260" height="200" alt="Place image" />
-                      </a>
-                    </div>
-                    <div className="place-card__info">
-                      <div className="place-card__price-wrapper">
-                        <div className="place-card__price">
-                          <b className="place-card__price-value">&euro;80</b>
-                          <span className="place-card__price-text">&#47;&nbsp;night</span>
-                        </div>
-                        <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
-                          <svg className="place-card__bookmark-icon" width="18" height="19">
-                            <use xlinkHref="#icon-bookmark"></use>
-                          </svg>
-                          <span className="visually-hidden">In bookmarks</span>
-                        </button>
-                      </div>
-                      <div className="place-card__rating rating">
-                        <div className="place-card__stars rating__stars">
-                          <span style={{width: `80%`}}></span>
-                          <span className="visually-hidden">Rating</span>
-                        </div>
-                      </div>
-                      <h2 className="place-card__name">
-                        <a href="#">Wood and stone place</a>
-                      </h2>
-                      <p className="place-card__type">Private room</p>
-                    </div>
-                  </article>
-
-                  <article className="near-places__card place-card">
-                    <div className="near-places__image-wrapper place-card__image-wrapper">
-                      <a href="#">
-                        <img className="place-card__image" src="img/apartment-02.jpg" width="260" height="200" alt="Place image" />
-                      </a>
-                    </div>
-                    <div className="place-card__info">
-                      <div className="place-card__price-wrapper">
-                        <div className="place-card__price">
-                          <b className="place-card__price-value">&euro;132</b>
-                          <span className="place-card__price-text">&#47;&nbsp;night</span>
-                        </div>
-                        <button className="place-card__bookmark-button button" type="button">
-                          <svg className="place-card__bookmark-icon" width="18" height="19">
-                            <use xlinkHref="#icon-bookmark"></use>
-                          </svg>
-                          <span className="visually-hidden">To bookmarks</span>
-                        </button>
-                      </div>
-                      <div className="place-card__rating rating">
-                        <div className="place-card__stars rating__stars">
-                          <span style={{width: `80%`}}></span>
-                          <span className="visually-hidden">Rating</span>
-                        </div>
-                      </div>
-                      <h2 className="place-card__name">
-                        <a href="#">Canal View Prinsengracht</a>
-                      </h2>
-                      <p className="place-card__type">Apartment</p>
-                    </div>
-                  </article>
-
-                  <article className="near-places__card place-card">
-                    <div className="near-places__image-wrapper place-card__image-wrapper">
-                      <a href="#">
-                        <img className="place-card__image" src="img/apartment-03.jpg" width="260" height="200" alt="Place image" />
-                      </a>
-                    </div>
-                    <div className="place-card__info">
-                      <div className="place-card__price-wrapper">
-                        <div className="place-card__price">
-                          <b className="place-card__price-value">&euro;180</b>
-                          <span className="place-card__price-text">&#47;&nbsp;night</span>
-                        </div>
-                        <button className="place-card__bookmark-button button" type="button">
-                          <svg className="place-card__bookmark-icon" width="18" height="19">
-                            <use xlinkHref="#icon-bookmark"></use>
-                          </svg>
-                          <span className="visually-hidden">To bookmarks</span>
-                        </button>
-                      </div>
-                      <div className="place-card__rating rating">
-                        <div className="place-card__stars rating__stars">
-                          <span style={{width: `100%`}}></span>
-                          <span className="visually-hidden">Rating</span>
-                        </div>
-                      </div>
-                      <h2 className="place-card__name">
-                        <a href="#">Nice, cozy, warm big bed apartment</a>
-                      </h2>
-                      <p className="place-card__type">Apartment</p>
-                    </div>
-                  </article>
+                  {closestOffers && closestOffers.map((item) => {
+                    const offerItem = find(propEq(`id`, item.id))(filteredOffers);
+                    return <CardOffer
+                      onBookmarkClick={handleBookmarkClick}
+                      offer={offerItem}
+                      key={offerItem.id}
+                      cardType={CardTypes.NEAR_PLACES}
+                    />;
+                  })}
                 </div>
               </section>
             </div>
@@ -297,26 +193,65 @@ export class OfferDetail extends PureComponent {
   }
 
   componentDidMount() {
-    const {loadOffersList, setDefaultSettings} = this.props;
-    loadOffersList();
+    const {loadOffersList, match, loadOfferReviews, setActiveOffer, setDefaultSettings, checkAuthorization} = this.props;
+    checkAuthorization();
     setDefaultSettings();
+    loadOfferReviews(match.params.id);
+    setActiveOffer(Number(match.params.id));
+    loadOffersList(Number(match.params.id));
+  }
+
+  componentDidUpdate(prevProps) {
+    const {loadOffersList, match, loadOfferReviews, setActiveOffer, setDefaultSettings} = this.props;
+    if (prevProps.match.params.id !== this.props.match.params.id) {
+      setDefaultSettings();
+      loadOfferReviews(match.params.id);
+      setActiveOffer(Number(match.params.id));
+      loadOffersList(Number(match.params.id));
+    }
+  }
+
+  componentWillUnmount() {
+    const {setActiveOffer} = this.props;
+    setActiveOffer(null);
   }
 }
 
 OfferDetail.propTypes = {
+  isAuthRequired: PropTypes.bool,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    })
+  }),
   offer: PropTypes.object,
-  offers: PropTypes.array,
+  reviews: PropTypes.array,
+  reviewList: PropTypes.array,
+  filteredOffers: PropTypes.array,
+  closestOffers: PropTypes.array,
   loadOffersList: PropTypes.func,
   setDefaultSettings: PropTypes.func,
+  loadOfferReviews: PropTypes.func,
+  setActiveOffer: PropTypes.func,
+  checkAuthorization: PropTypes.func,
+  addToFavorite: PropTypes.func,
 };
 
 export default connect(
-  (state, ownProps) => ({
-    offer: getOffer(state, ownProps.match.params.id),
-    offers: getOffers(state),
-  }),
-  (dispatch) => ({
-    loadOffersList: () => dispatch(loadOffers()),
-    setDefaultSettings: () => dispatch(startUpOffers()),
-  })
+    (state, ownProps) => ({
+      offer: getOffer(state, ownProps.match.params.id),
+      filteredOffers: getFilteredOffers(state),
+      reviewList: getReviewList(state),
+      reviews: getReviews(state),
+      closestOffers: getClosestOffers(state),
+      isAuthRequired: getIsAuthRequired(state),
+    }),
+    (dispatch, ownProps) => ({
+      addToFavorite: (id, status) => dispatch(ActionCreator.addToFavorite(id, status)),
+      loadOffersList: (id) => dispatch(loadOffers(id)),
+      setDefaultSettings: () => dispatch(startUpOffers()),
+      loadOfferReviews: () => dispatch(loadReviews(ownProps.match.params.id)),
+      setActiveOffer: (id) => dispatch(ActionCreator.setActiveOffer(id)),
+      checkAuthorization: () => dispatch(ActionCreator.checkAuthorization()),
+    })
 )(OfferDetail);
