@@ -7,22 +7,17 @@ exports[`should match snapshot 1`] = `
   <div
     className="cities__image-wrapper place-card__image-wrapper"
   >
-    <a
-      href="#"
-    >
-      <img
-        alt="Place image"
-        className="place-card__image"
-        height="200"
-        id="offer-1"
-        onMouseEnter={[Function]}
-        src="aaa"
-        width="260"
-      />
-    </a>
+    <img
+      alt="Place image"
+      className="place-card__image"
+      height="200"
+      onMouseEnter={[Function]}
+      src="aaa"
+      width="260"
+    />
   </div>
   <div
-    className="place-card__info"
+    className=" place-card__info"
   >
     <div
       className="place-card__price-wrapper"
@@ -43,7 +38,8 @@ exports[`should match snapshot 1`] = `
         </span>
       </div>
       <button
-        className="place-card__bookmark-button place-card__bookmark-button--active button"
+        className="place-card__bookmark-button place-card__bookmark-button button"
+        onClick={[Function]}
         type="button"
       >
         <svg
@@ -71,7 +67,7 @@ exports[`should match snapshot 1`] = `
         <span
           style={
             Object {
-              "width": "80%",
+              "width": "NaN%",
             }
           }
         />
@@ -86,7 +82,8 @@ exports[`should match snapshot 1`] = `
       className="place-card__name"
     >
       <a
-        href="#"
+        href="/offer/undefined"
+        onClick={[Function]}
       />
     </h2>
     <p

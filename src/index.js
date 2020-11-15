@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Router} from 'react-router-dom';
 import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import {compose} from 'recompose';
-import {BrowserRouter} from 'react-router-dom'
-import {cities} from './mocks/cities.js';
-import App from './components/app/app.jsx';
+
+import {App} from './components/app/app.jsx';
 import reducer from './reducers/index.js';
 import createAPI from './api/api.js';
+import history from './history/history.js';
 
 const init = () => {
   const api = createAPI((...args) => store.dispatch(...args));
@@ -21,11 +22,11 @@ const init = () => {
   );
 
   ReactDOM.render(
-    <Provider store={store}>
-      <BrowserRouter>
-        <App cities={cities} />
-      </BrowserRouter>
-    </Provider>,
+    <Router history={history}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </Router>,
     document.querySelector(`#root`)
   );
 };

@@ -1,7 +1,8 @@
 import axios from 'axios';
-import {requireAuthorization} from '../reducers/user';
+import {isNil} from 'ramda';
+import {requireAuthorization, setSubmitButtonState} from '../reducers/user.js';
 
-const createAPI = () => {
+const createAPI = (dispatch) => {
   const api = axios.create({
     baseURL: `https://htmlacademy-react-2.appspot.com/six-cities`,
     timeout: 5000,
@@ -13,10 +14,12 @@ const createAPI = () => {
   };
 
   const onError = (err) => {
-    if (err.response.satus === 403) {
-      return requireAuthorization(true);
+    const errStatus = err.response.status;
+    if (!isNil(errStatus) && errStatus === 401) {
+      dispatch(requireAuthorization(true));
+    } else if (!isNil(errStatus) && errStatus === 400) {
+      dispatch(setSubmitButtonState(true));
     }
-
     return err;
   };
 

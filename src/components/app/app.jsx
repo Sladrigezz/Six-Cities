@@ -1,31 +1,23 @@
-import {connect} from 'react-redux';
+import {Switch, Route} from 'react-router-dom';
 import React from 'react';
-import PropTypes from 'prop-types';
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
+
 import MainPage from '../main-page/main-page.jsx';
-import SignIn from '../sign-in/sign-in.jsx';
 import OfferDetail from '../offer-detail/offer-detail.jsx';
+import MainEmpty from '../main-emtpy/main-empty.jsx';
+import login from '../login/login.jsx';
+import Favorites from '../favorites/favorites.jsx';
+import {FavoritesEmpty} from '../favorites-empty/favorites-empty.jsx';
 
-export class App extends React.PureComponent {
-  render() {
-    return (
-      <BrowserRouter>
-        <Switch>
-          <Route path={`/`} component={MainPage} exact />
-          <Route path={`/login`} component={SignIn} exact />
-          <Route path={`/offer/:id`} component={OfferDetail} exact />
-        </Switch>
-      </BrowserRouter>
-    );
-  }
+export function App() {
+  return (
+    <Switch>
+      <Route path={`/`} component={MainPage} exact />
+      <Route path={`/login`} component={login} exact />
+      <Route path={`/offer/:id`} component={OfferDetail} exact />
+      <Route path={`/offers-not-found`} component={MainEmpty} exact />
+      <Route path={`/favorites`} component={Favorites} exact />
+      <Route path={`/favorites-not-found`} component={FavoritesEmpty} exact />
+    </Switch>
+  );
+
 }
-
-App.propTypes = {
-  isAuthorizationRequired: PropTypes.bool,
-};
-
-export default connect(
-  (state) => ({
-    isAuthorizationRequired: state.user.isAuthorizationRequired,
-  })
-)(App);
