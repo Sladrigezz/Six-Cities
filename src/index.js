@@ -14,20 +14,20 @@ import history from './history/history.js';
 const init = () => {
   const api = createAPI((...args) => store.dispatch(...args));
   const store = createStore(
-    reducer,
-    compose(
-      applyMiddleware(thunk.withExtraArgument(api)),
-      window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f
-    )
+      reducer,
+      compose(
+        applyMiddleware(thunk.withExtraArgument(api)),
+        window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f
+      )
   );
 
   ReactDOM.render(
-    <Router history={history}>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </Router>,
-    document.querySelector(`#root`)
+      <Router history={history}>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </Router>,
+      document.querySelector(`#root`)
   );
 };
 

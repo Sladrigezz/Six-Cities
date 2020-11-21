@@ -6,14 +6,14 @@ import {sortOptions, SortTypes} from '../../constants/constants.js';
 import {getActiveSortType, getIsSortOpen} from '../../selectors/sort.js';
 import {ActionCreator} from '../../reducers/index.js';
 
-export const SortOffers = ({activeSortType, isOpen, setSortType, sortFilteredOffers}) => {
+export const SortOffers = (props, {activeSortType, isOpen, setSortType, sortFilteredOffers}) => {
   const handleClick = () => {
-    this.props.toggleSort();
+    props.toggleSort();
     document.removeEventListener(`click`, handleClick);
   };
 
   const onSortClickHandler = () => {
-    this.props.toggleSort();
+    props.toggleSort();
     document.addEventListener(`click`, handleClick);
   };
 
