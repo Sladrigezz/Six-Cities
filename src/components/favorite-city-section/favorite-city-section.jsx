@@ -20,7 +20,7 @@ export const FavoriteCitySection = ({city, offers, onBookmarkClick}) => {
       </div>
     </li>
   );
-}
+};
 
 
 FavoriteCitySection.propTypes = {
