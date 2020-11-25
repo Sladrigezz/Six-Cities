@@ -30,4 +30,9 @@ SignIn.propTypes = {
   isAuthRequired: PropTypes.bool
 };
 
-export default SignIn
+export default connect (
+  (state)=>({
+    isAuthRequired: getIsAuthRequired(state),
+    responses: getResponses(state),
+  })
+)(SignIn)
